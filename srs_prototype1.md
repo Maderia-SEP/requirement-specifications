@@ -29,12 +29,13 @@ In the context of this document, the word "function" is used to imply any proces
 
 #### The register functionality
 1. The register page should be able to "switch" between user-register mode and hotel-register mode. In user-register mode, the page should ask for the full name of the user, a unique email of the user, a unique usernmame of the user. (neither the email nor the username should be registered before.), and a password that is at least 6 characters long. In hotel-login mode, instead of asking for a full name, the register page should ask for the name of the hotel (this should be unique too.)
-2. The register page should send the registration data 
+2. The register page should send the registration data to different endpoints of the back-end demending on whether it's a user or a hotel that is registering.
 3. There should be a password confirmation input field on the register page. We make sure the password and password confirmation fields have similar value (with client-side logic) before sending the data for the server to examine and register.
-4. The register page should show relevant error messages when the password is less than 6 characters long, when the given username, email, or hotel name is already registered with some other account.
-5. If the registration data sent from the register page to the back-end is all correct and valid, the back-end code registers the client, logs them in, and redirects them to the index page.
-6. Users and hotels are different entities in the database. So they should be stored in their own separate tables upon registration.
-7. For this prototype, (1st version) the database schema for the user and hotel entities depends on what data we collect while registering those two entities. (i.e. full name, username, email, password in user table and hotel name, username, email, password in hotels table).
+5. The register page should show relevant error messages when the password is less than 6 characters long (with front-end logic) or when the given username, email, or hotel name is already registered with some other account.
+7. If the registration data sent from the register page to the back-end is all correct and valid, the back-end code registers the client, logs them in, and redirects them to the index page.
+8. In the back-end code, when a client get's registered, the password should be hashed before it get's stored. The system should not store passwords in plain text. Later, every time a client enters their password to log in, the password they entered should be hashed with the same hash function and compared to the hash of the real password we stored in the database upon registration.
+9. Users and hotels are different entities in the database. So they should be stored in their own separate tables upon registration.
+10. For this prototype, (1st version) the database schema for the user and hotel entities depends on what data we collect while registering those two entities. (i.e. full name, username, email, password in user table and hotel name, username, email, password in hotels table).
 
 #### The index page
 1. The index page is a page that only logged in clients are supposed to see. The login functionality, upon successful login, should redirect to the index page and that should be the only way the index page can be accessed.
