@@ -11,11 +11,12 @@ In the context of this document, the word "function" is used to imply any proces
 1. The system should allow new clients to be registered.
 2. The system should register clients in two categories: "Users" and "Hotels".
 3. The system should allow registered clients to log in and log out.
+4. The system should allow registered clients to modify (edit) their profile information. 
 4. The system should allow registered clients to delete their accounts.
 
 ### System requirement specifications
 ### General
-1. The website will have 3 pages: the login page (one page for both users and hotels), a register page (one page for both users and hotels) and an index page.
+1. The website will have 5 pages: the login page (one page for both users and hotels), a register page (one page for both users and hotels), the index page, user profile page and the hotel profile page.
 
 #### The login functionality
 1. The login page should be able to "switch" between the user-login mode and hotel-login mode. By switching, it is meant that the UI of the page changes, asking potentially different information when in the two modes. Also, the login page should send the login data to different end-points of the database depending on whether it's a user or a hotel that's logging in.
@@ -48,6 +49,19 @@ In the context of this document, the word "function" is used to imply any proces
 #### The logout functionality
 1. the logout function at the back-end should be triggered by the "logout" button on the index page.
 2. Once a client logs out, the back-end should identify any subsequent requests coming from that browser as not logged in. Thus, for example, requests for the index page will be redirected to the login page.
+
+#### The user profile page and user profile editing
+1. There should be 2 profile pages: one for users and one for hotels. These pages should be accessible only for logged in clients. If a client that's not logged in requests the profile page, the back-end should redirect to the login page.
+2. When a logged in client requests the profile page, the back-end code should check if the client is logged in as a user or a hotel and redirect to the appropriate page based on that.
+3. On the user profile page, users can see their full name and username. They also have the option to edit these information. The back-end code should be able to receive a request to edit the user profile on some end-point and service the request. If the newly changed username or email is already registered, the back-end should respond with the profile page again, but this time, with a relevant error message.
+4. On the user profile page, there should also be the option to change the current password of the user. To change the current password, the user should input the current password, the new password and the confirmation for  the new password. This data will be sent to an endpoint of the back-end (different from the edit profile end-point) where the current password gets validated and if valid, replaced with the new password. The front-end logic of the profile page should make sure the password length >= 6 rule before sending the data to the back-end. If the current password sent along with the new password is incorrect, the back-end should respond with the profile page again, but this time, with a relevant error message.
+
+#### The hotel profile page and hotel profile editing
+1. The hotel profile page will be very similar in appearance and operation with the user profile page. hotels should see their hotel name and username on the hotel profile page. They should also have the option to change these information and submit. The back-end should have an end-point that receives edit profile requests and services them. If the new hotel name or username is already registered, the back-end should respond with the profile page again, but this time with a relevant error message.
+2. There should also be the option to change the current password of the hotel account on the hotel profile page. In order to change the current password, a hotel should enter the old password, the new password and the confirmation for the new password. The front-end logic should enforce that the length pf the passwords >=6 and that the new password and the confirmation are identical.
+3. The back-end should have an endpoint (different than the 'edit hotel profile' endpoint) that receives and services password change requests. If the old password the hotel entered is valid, the endpoint replalces it with the new password. if the old password is invalid, the endpoint should respond with the hotel profile page again, but this time with a relevant error message.
+
+
 
 #### The delete account functionality
 1. When clients press the "delete account" button on the home page, they should be presented with a warning message and asked to confirm their choice (with front-end logic).
